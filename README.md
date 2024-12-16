@@ -45,7 +45,7 @@ Berikut adalah beberapa tangkapan layar dari aplikasi WebGIS:
 
 ## LINK WEBSITE
 WEBGIS ini dapat diakses melalui tautan berikut:  
- **[The Klitih WebGIS](https://nafis0403.github.io/responsi_pgweb/)**  
+ **[Peta Wisata Bali](https://github.com/RydhX/RESPONSI-PGWEB---RIDHO)**  
 ---
 
 Silakan gunakan WebGIS Pariwisata Pulau Bali untuk mempermudah eksplorasi tempat wisata terbaik di pulau ini! Jika Anda memiliki pertanyaan atau masukan, silakan hubungi kami melalui email: `ridhoalifutama@mail.ugm.ac.id`.
