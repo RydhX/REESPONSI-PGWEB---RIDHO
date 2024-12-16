@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS Pariwisata Pulau Bali</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            position: relative;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        header img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        header .btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #333;
+            color: #f5f5f5;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 30px 20px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial {
+            background: #fff;
+            padding: 40px;
+            text-align: center;
+            color: #333;
+        }
+
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 2px solid #333;
+        }
+
+        footer {
+            background: #fff;
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        #info-links {
+            background: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .info-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .info-box p {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .btn-info {
+            display: inline-block;
+            text-decoration: none;
+            padding: 8px 12px;
+            background: #333;
+            color: #f5f5f5;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .btn-info:hover {
+            background: #555;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <img src="image/bg_bali.jpg" alt="Background image of Bali with scenic views of beaches and temples">
+        <h1>WebGIS Pariwisata Pulau Bali</h1>
+        <p>Menemukan destinasi wisata terbaik di Pulau Bali dengan mudah</p>
+        <a href="#map" class="btn">Lihat Peta</a>
+        <nav>
+            <a href="#home">Beranda</a>
+            <a href="#about">Tentang</a>
+            <a href="#contact">Kontak</a>
+        </nav>
+    </header>
+
+    <!-- Welcome Section -->
+    <section id="home">
+        <h2>Wisata Pulau Bali</h2>
+        <p>Pulau ini terkenal dengan keindahan alamnya yang memukau, kekayaan budayanya, dan pantai-pantainya yang
+            menakjubkan.</p>
+    </section>
+
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <!-- Section Informasi -->
+
+    <section id="info-links" data-aos="fade-in">
+        <h2>Informasi Terkait</h2>
+        <div class="info-container">
+            <div class="info-box" data-aos="zoom-in">
+                <h3>Budaya Bali</h3>
+                <p>Jelajahi kebudayaan dan tradisi unik masyarakat Bali.</p>
+                <a href="https://www.detik.com/bali/budaya/d-6392476/kebudayaan-bali-keberagamaan-dan-ciri-khasnya"
+                    target="_blank" class="btn-info">Selengkapnya</a>
+            </div>
+            <div class="info-box" data-aos="zoom-in">
+                <h3>Pantai Bali</h3>
+                <p>Temukan pantai-pantai eksotis dengan pemandangan indah di Bali.</p>
+                <a href="https://www.tripadvisor.co.id/Attractions-g294226-Activities-c61-t52-Bali.html" target="_blank"
+                    class="btn-info">Selengkapnya</a>
+            </div>
+            <div class="info-box" data-aos="zoom-in">
+                <h3>Wisata Kuliner</h3>
+                <p>Nikmati makanan khas Bali yang lezat dan menggugah selera.</p>
+                <a href="https://www.tempo.co/gaya-hidup/rekomendasi-15-tempat-kuliner-bali-yang-populer-dan-enak-213382"
+                    target="_blank" class="btn-info">Selengkapnya</a>
+            </div>
+            <div class="info-box" data-aos="zoom-in">
+                <h3>Penginapan</h3>
+                <p>Cari penginapan terbaik untuk liburan Anda di Bali.</p>
+                <a href="https://www.tripadvisor.com/SmartDeals-g294226-Bali-Hotel-Deals.html" target="_blank"
+                    class="btn-info">Selengkapnya</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+        <img src="image/profile.jpg" alt="User">
+        <h3>Ridho Alif</h3>
+        <p>"WebGIS yang digunakan untuk mempermudah pencarian destinasi wisata terbaik di Pulau Bali, menakjubkan!"</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 WebGIS Pariwisata Pulau Bali. All Rights Reserved.</p>
+        <p><i class="fas fa-envelope"></i> ridhoalifutama@mail.ugm.ac.id</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inisialisasi peta
+        const map = L.map('map').setView([-8.4870, 115.2950], 10); // Koordinat awal (latitude, longitude)
+    
+        // Menambahkan layer peta dari OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+    
+        // Data koordinat marker
+        const markers = [
+            { 
+                name: "Pura Tanah Lot", 
+                deskripsi: "Pura Tanah Lot adalah salah satu pura yang paling terkenal di Bali, terletak di atas batu karang di tepi laut. Tempat ini terkenal dengan pemandangan matahari terbenam yang spektakuler.", 
+                coords: [-8.6319, 115.0885] 
+            },
+            { 
+                name: "Pantai Kuta", 
+                deskripsi: "Pantai Kuta adalah salah satu destinasi wisata terkenal di Bali yang menawarkan ombak yang cocok untuk berselancar dan pemandangan matahari terbenam yang indah.", 
+                coords: [-8.7177, 115.1697] 
+            },
+            { 
+                name: "Ubud Monkey Forest", 
+                deskripsi: "Hutan Monyet Ubud adalah kawasan hutan alami yang menjadi rumah bagi ratusan monyet dan pura suci.", 
+                coords: [-8.5186, 115.2582] 
+            },
+            { 
+                name: "Pura Besakih", 
+                deskripsi: "Pura Besakih adalah pura terbesar dan terpenting di Bali, terletak di lereng Gunung Agung. Pura ini sering disebut sebagai dan merupakan tempat suci bagi umat Hindu.", 
+                coords: [-8.3430, 115.4800] 
+            },
+            { 
+                name: "Tegalalang Rice Terrace", 
+                deskripsi: "Terasering sawah Tegalalang terkenal dengan pemandangan yang indah dan merupakan tempat yang populer untuk berfoto.", 
+                coords: [-8.4850, 115.2760] 
+            },
+            { 
+                name: "Nusa Penida", 
+                deskripsi: "Nusa Penida adalah pulau kecil yang terkenal dengan pantai-pantainya yang indah dan pemandangan alam yang menakjubkan.", 
+                coords: [-8.7370, 115.5050] 
+            },
+            { 
+                name: "Air Terjun Tegenungan", 
+                deskripsi: "Air Terjun Tegenungan adalah air terjun yang indah dan mudah diakses, dikelilingi oleh hutan tropis.", 
+                coords: [-8.5110, 115.3250] 
+            },
+            { 
+                name: "Pantai Sanur", 
+                deskripsi: "Pantai Sanur dikenal dengan suasana yang tenang dan pemandangan matahari terbit yang menakjubkan. Tempat ini juga cocok untuk aktivitas air seperti snorkeling.", 
+                coords: [-8.6840, 115.2630] 
+            },
+            { 
+                name: "Pura Ulun Danu Bratan", 
+                deskripsi: "Pura Ulun Danu Bratan adalah pura yang terletak di tepi Danau Bratan, terkenal dengan arsitektur yang indah dan pemandangan yang menakjubkan.", 
+                coords: [-8.3920, 115.1740] 
+            },
+            { 
+                name: "Bali Safari and Marine Park", 
+                deskripsi: "Taman Safari dan Laut Bali adalah taman hiburan yang menawarkan pengalaman melihat berbagai satwa liar dan pertunjukan menarik.", 
+                coords: [-8.4870, 115.2950] 
+            },
+        ];
+    
+        // Menambahkan marker ke peta
+        markers.forEach(marker => {
+            const popupContent = `<h3>${marker.name}</h3><p>${marker.deskripsi}</p>`;
+            L.marker(marker.coords)
+                .addTo(map)
+                .bindPopup(popupContent);
+        });
+    
+        // Menonaktifkan zoom saat kursor berada di atas peta
+        map.on('mouseover', function () {
+            map.scrollWheelZoom.disable();
+        });
+    
+        // Mengaktifkan kembali zoom saat kursor keluar dari peta
+        map.on('mouseout', function () {
+            map.scrollWheelZoom.enable();
+        });
+    </script>
+
+    <!-- Kontak Section -->
+    <section id="contact">
+        <h2>Kontak Kami</h2>
+        <p>Jika Anda memiliki pertanyaan atau ingin informasi lebih lanjut, silakan hubungi kami:</p>
+        <p>Email: <a href="mailto:ridhoalifutama@mail.ugm.ac.id">ridhoalifutama@mail.ugm.ac.id</a></p>
+        <p>Telepon: +62 812-3456-7890</p>
+        <p>Alamat: Jl. Raya Bali No. 123, Denpasar, Bali</p>
+    </section>
+
+</body>
+
+</html>
